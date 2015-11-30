@@ -12,4 +12,12 @@ describe Character do
     expect(character.name).to eq "Bob"
   end
 
+  it "should have an alignment value" do
+    expect(character.alignment).to eq :neutral
+  end
+
+  it "should have a valid alignment value" do
+    expect { character.alignment = :sort_of_good }.to raise_error(ArgumentError)
+  end
+
 end
