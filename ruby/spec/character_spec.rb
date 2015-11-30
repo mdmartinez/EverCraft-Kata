@@ -91,6 +91,32 @@ describe Character do
       expect(character.intelligence_modifier).to eq(0)
       expect(character.charisma_modifier).to eq(0)
     end
-  end
 
+    it "the strength modifier should increase strength when above 10" do
+      expect{ character.strength = 20 }.to change{ character.strength_modifier}.from(0).to(5)
+    end
+
+    it "the strength modifier should decrease strength when below 10" do
+      expect{ character.strength = 1 }.to change{ character.strength_modifier}.from(0).to(-5)
+    end
+
+    it "the strength modifier should amplify damage" do
+      character.strength = 20
+      character.attack(second_character,20)
+      expect(second_character.dead?).to be true
+    end
+
+    it "the dexterity modifier should increase armor class" do
+      second_character.dexterity = 20
+      character.attack(second_character, 14)
+      expect(second_character.hit_points).to eq(5)
+    end
+
+    it "the constitution modifier should amplify hit points" do
+      character.strength = 20
+      second_character.constitution = 14
+      character.attack(second_character,19)
+      expect(second_character.dead?).to be false
+    end
+  end
 end

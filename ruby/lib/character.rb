@@ -1,6 +1,8 @@
 class Character
   attr_accessor :name, :hit_points
-  attr_reader :alignment, :armor_class, :strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma
+  attr_reader :alignment, :strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma
+
+  attr_writer :hit_points
 
   def initialize(options = {})
     @name = options.fetch(:name) { nil }
@@ -13,6 +15,14 @@ class Character
     @wisdom = 10
     @intelligence = 10
     @charisma = 10
+  end
+
+  def armor_class
+    @armor_class + dexterity_modifier
+  end
+
+  def hit_points
+    [@hit_points + constitution_modifier,1].max
   end
 
   def strength=(value)
@@ -84,6 +94,16 @@ class Character
     roll == 20
   end
 
+  def critical_damage
+    damage = 2 + strength_modifier * 2
+    [damage,1].max
+  end
+
+  def normal_damage
+    damage = 1 + strength_modifier
+    [damage,1].max
+  end
+
   def normal_attack(character, roll)
     roll >= character.armor_class
   end
@@ -95,9 +115,9 @@ class Character
   def attack(attacked_character, roll_value)
     case
     when critical_attack(roll_value)
-      attacked_character.hit_points -= 2
+      attacked_character.hit_points -= critical_damage
     when normal_attack(attacked_character, roll_value)
-      attacked_character.hit_points -= 1
+      attacked_character.hit_points -= normal_damage
     end
   end
 
