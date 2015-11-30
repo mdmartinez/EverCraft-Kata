@@ -17,5 +17,9 @@ class Character
     @alignment = value
   end
 
+  def attack(character)
+    roll = 1 + rand(20)
+    roll >= character.armor_class ? "hit!" : nil
+  end
 
 end

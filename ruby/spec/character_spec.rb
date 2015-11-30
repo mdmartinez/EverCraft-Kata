@@ -2,6 +2,7 @@ require 'character'
 
 describe Character do
   let (:character) { Character.new(name: "John") }
+  let (:second_character) { Character.new(name: "Bill") }
 
   it "should have a name" do
     expect(character.name).to eq "John"
@@ -26,6 +27,10 @@ describe Character do
 
   it "should have 5 hit points by default" do
     expect(character.hit_points).to eq 5
+  end
+
+  it "should be able to attack" do
+    expect{ character.attack(second_character) }.to_not raise_error
   end
 
 end
