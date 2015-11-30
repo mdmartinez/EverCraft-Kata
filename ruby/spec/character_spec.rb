@@ -20,4 +20,12 @@ describe Character do
     expect { character.alignment = :sort_of_good }.to raise_error(ArgumentError)
   end
 
+  it "should have a default armor class of 10" do
+    expect(character.armor_class).to eq 10
+  end
+
+  it "should have 5 hit points by default" do
+    expect(character.hit_points).to eq 5
+  end
+
 end
