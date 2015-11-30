@@ -119,4 +119,12 @@ describe Character do
       expect(second_character.dead?).to be false
     end
   end
+
+  it "has experience points" do
+    expect(character.experience_points).to eq(0)
+  end
+
+  it "gains experience when attacking" do
+    expect{ character.attack(second_character,15) }.to change{ character.experience_points }.by(10)
+  end
 end

@@ -1,6 +1,6 @@
 class Character
-  attr_accessor :name, :hit_points
-  attr_reader :alignment, :strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma
+  attr_accessor :name
+  attr_reader :alignment, :strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma, :experience_points
 
   attr_writer :hit_points
 
@@ -15,6 +15,7 @@ class Character
     @wisdom = 10
     @intelligence = 10
     @charisma = 10
+    @experience_points = 0
   end
 
   def armor_class
@@ -22,7 +23,8 @@ class Character
   end
 
   def hit_points
-    [@hit_points + constitution_modifier,1].max
+    hp_modified = @hit_points + constitution_modifier
+    [hp_modified,1].max
   end
 
   def strength=(value)
@@ -94,6 +96,10 @@ class Character
     roll == 20
   end
 
+  def normal_attack(character, roll)
+    roll >= character.armor_class
+  end
+
   def critical_damage
     damage = 2 + strength_modifier * 2
     [damage,1].max
@@ -104,10 +110,6 @@ class Character
     [damage,1].max
   end
 
-  def normal_attack(character, roll)
-    roll >= character.armor_class
-  end
-
   def dead?
     @hit_points < 1
   end
@@ -115,10 +117,19 @@ class Character
   def attack(attacked_character, roll_value)
     case
     when critical_attack(roll_value)
-      attacked_character.hit_points -= critical_damage
+      attacked_character.hit_points -= critical_damage;
+      gain_experience
     when normal_attack(attacked_character, roll_value)
-      attacked_character.hit_points -= normal_damage
+      attacked_character.hit_points -= normal_damage;
+      gain_experience
     end
+
+  end
+
+  private
+
+  def gain_experience
+    @experience_points += 10
   end
 
 end
