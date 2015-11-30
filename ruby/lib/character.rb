@@ -1,7 +1,6 @@
 class Character
-
-  attr_accessor :name
-  attr_reader :alignment, :armor_class, :hit_points
+  attr_accessor :name, :hit_points
+  attr_reader :alignment, :armor_class
 
   def initialize(options = {})
     @name = options.fetch(:name) { nil }
@@ -17,9 +16,29 @@ class Character
     @alignment = value
   end
 
-  def attack(character)
-    roll = 1 + rand(20)
-    roll >= character.armor_class ? "hit!" : nil
+  def roll
+    1 + rand(20)
+  end
+
+  def critical_attack(roll)
+    roll == 20
+  end
+
+  def normal_attack(roll, character)
+    roll >= character.armor_class
+  end
+
+  def dead?
+    @hit_points < 1
+  end
+
+  def attack(attacked_character, roll_value)
+    case
+    when critical_attack(roll_value)
+      attacked_character.hit_points -= 2
+    when normal_attack(roll_value,attacked_character)
+      attacked_character.hit_points -= 1
+    end
   end
 
 end
