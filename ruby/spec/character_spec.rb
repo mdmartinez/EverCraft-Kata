@@ -46,4 +46,40 @@ describe Character do
     expect(second_character.dead?).to be true
   end
 
+  it "should have the strength, dexterity, constitution, wisdom, intelligence, and charisma attributes" do
+    expect(character).to respond_to(:strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma)
+  end
+
+  describe "abilities" do
+    it "should only allow strength to be between 1 and 20" do
+      expect{ character.strength = 21 }.to raise_error(ArgumentError)
+      expect{ character.strength = 19 }.to change{character.strength }.from(10).to(19)
+    end
+
+    it "should only allow dexterity to be between 1 and 20" do
+      expect{ character.dexterity = 21 }.to raise_error(ArgumentError)
+      expect{ character.dexterity = 19 }.to change{character.dexterity }.from(10).to(19)
+    end
+
+    it "should only allow constitution to be between 1 and 20" do
+      expect{ character.constitution = 21 }.to raise_error(ArgumentError)
+      expect{ character.constitution = 19 }.to change{character.constitution }.from(10).to(19)
+    end
+
+    it "should only allow wisdom to be between 1 and 20" do
+      expect{ character.wisdom = 21 }.to raise_error(ArgumentError)
+      expect{ character.wisdom = 19 }.to change{character.wisdom }.from(10).to(19)
+    end
+
+    it "should only allow intelligence to be between 1 and 20" do
+      expect{ character.intelligence = 21 }.to raise_error(ArgumentError)
+      expect{ character.intelligence = 19 }.to change{character.intelligence }.from(10).to(19)
+    end
+
+    it "should only allow charisma to be between 1 and 20" do
+      expect{ character.charisma = 21 }.to raise_error(ArgumentError)
+      expect{ character.charisma = 19 }.to change{character.charisma }.from(10).to(19)
+    end
+  end
+
 end
