@@ -33,14 +33,12 @@ describe Character do
     expect { character.attack(second_character, character.roll) }.not_to raise_error
   end
 
-  it "should take damage after a successful attack" do
-    character.attack(second_character, 11)
-    expect(second_character.hit_points).to eq 4
+  it "should take normal damage after a successful attack" do
+    expect{ character.attack(second_character, 11) }.to change{ second_character.hit_points }.by(-1)
   end
 
   it "should take double damage after a critical attack" do
-    character.attack(second_character, 20)
-    expect(second_character.hit_points).to eq 3
+    expect{ character.attack(second_character, 20) }.to change{ second_character.hit_points }.by(-2)
   end
 
   it "should be dead when hit points reach 0" do
