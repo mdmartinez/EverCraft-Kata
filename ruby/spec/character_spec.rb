@@ -82,4 +82,15 @@ describe Character do
     end
   end
 
+  describe "ability modifiers" do
+    it "should have modifiers" do
+      expect(character.strength_modifier).to eq(0)
+      expect(character.dexterity_modifier).to eq(0)
+      expect(character.constitution_modifier).to eq(0)
+      expect(character.wisdom_modifier).to eq(0)
+      expect(character.intelligence_modifier).to eq(0)
+      expect(character.charisma_modifier).to eq(0)
+    end
+  end
+
 end

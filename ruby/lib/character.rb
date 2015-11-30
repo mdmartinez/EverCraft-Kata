@@ -45,6 +45,30 @@ class Character
     @charisma = value
   end
 
+  def strength_modifier
+    (strength - 10) / 2
+  end
+
+  def dexterity_modifier
+    (dexterity - 10) / 2
+  end
+
+  def constitution_modifier
+    (constitution - 10) / 2
+  end
+
+  def wisdom_modifier
+    (dexterity - 10) / 2
+  end
+
+  def intelligence_modifier
+    (dexterity - 10) / 2
+  end
+
+  def charisma_modifier
+    (dexterity - 10) / 2
+  end
+
   ALIGNMENT_OPTIONS = [:good, :evil, :neutral]
 
   def alignment=(value)
@@ -76,8 +100,5 @@ class Character
       attacked_character.hit_points -= 1
     end
   end
-
-
-
 
 end
