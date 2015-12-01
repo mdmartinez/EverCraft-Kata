@@ -127,4 +127,17 @@ describe Character do
   it "gains experience when attacking" do
     expect{ character.attack(second_character,15) }.to change{ character.experience_points }.by(10)
   end
+
+  it "levels up on each 1000xp gain" do
+    expect{ character.experience_points+= 1000 }.to change{ character.level }.by(1)
+    expect{ character.experience_points+= 2000 }.to change{ character.level }.by(2)
+  end
+
+  it "should have increased hp at higher levels" do
+    expect{ character.experience_points+= 1000 }.to change{ character.hit_points }.by(5)
+  end
+
+  it "should increase damage by 1 for each level" do
+    expect{ character.experience_points+= 1000 }.to change{ character.normal_damage }.by(1)
+  end
 end

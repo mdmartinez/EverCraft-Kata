@@ -1,7 +1,6 @@
 class Character
-  attr_accessor :name
+  attr_accessor :name, :experience_points
   attr_reader :alignment, :strength, :dexterity, :constitution, :wisdom, :intelligence, :charisma, :experience_points
-
   attr_writer :hit_points
 
   def initialize(options = {})
@@ -16,6 +15,15 @@ class Character
     @intelligence = 10
     @charisma = 10
     @experience_points = 0
+    @level = 1
+  end
+
+  def level
+    @level + experience_points / 1000
+  end
+
+  def level_hp_modifier
+    level > 1 ? (level - 1) * 5 : 0
   end
 
   def armor_class
@@ -23,7 +31,7 @@ class Character
   end
 
   def hit_points
-    hp_modified = @hit_points + constitution_modifier
+    hp_modified = @hit_points + constitution_modifier + level_hp_modifier
     [hp_modified,1].max
   end
 
@@ -100,13 +108,17 @@ class Character
     roll >= character.armor_class
   end
 
+  def level_damage_modifier
+    level / 2
+  end
+
   def critical_damage
-    damage = 2 + strength_modifier * 2
+    damage = 2 + strength_modifier * 2 + level_damage_modifier
     [damage,1].max
   end
 
   def normal_damage
-    damage = 1 + strength_modifier
+    damage = 1 + strength_modifier + level_damage_modifier
     [damage,1].max
   end
 
@@ -123,7 +135,6 @@ class Character
       attacked_character.hit_points -= normal_damage;
       gain_experience
     end
-
   end
 
   private
@@ -131,5 +142,4 @@ class Character
   def gain_experience
     @experience_points += 10
   end
-
 end
